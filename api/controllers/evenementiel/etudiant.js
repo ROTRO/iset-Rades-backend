@@ -3,9 +3,10 @@ const connexion = require('../../../db_connection');
 
 module.exports.createEtudiant = (req, res) => {
     const data = req.body;
-    connexion.query(
-        "INSERT INTO etudiant(id_situation_etudiant, id_departement, id_user) VALUES (?,?,?)",
-        [data.id_situation_etudiant, data.id_departement, data.id_user],
+    console.log(data)
+    connexion.query(  
+        "INSERT INTO etudiant(id_user) VALUES (?)",
+        [data.id_user],
         (err, results) => {
             if (err) {
                 res.status(500).json({
@@ -57,7 +58,7 @@ module.exports.getListEtudiant = (req, res) => {
 module.exports.getEtudiantById = (req, res) => {
     const id_user = req.params.id;
     connexion.query(
-        "SELECT *,situation_etudiant.libelle as situationLibelle FROM etudiant,situation_etudiant,departement,user,adresse WHERE etudiant.id_situation_etudiant=situation_etudiant.id_situation_etudiant and etudiant.id_departement = departement.id_departement and etudiant.id_user=user.id_user and user.id_user=adresse.id_user and etudiant.id_user=?",
+        "SELECT * FROM etudiant,user,adresse WHERE  etudiant.id_user=user.id_user and user.id_user=adresse.id_user and etudiant.id_user=?",
         [id_user],
         (err, results) => {
 

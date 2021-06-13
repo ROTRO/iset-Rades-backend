@@ -83,9 +83,10 @@ module.exports.getEtablissementById = (req, res) => {
 
 module.exports.updateEtablissement = (req, res) => {
     const data = req.body;
+    console.log(data)
     connexion.query(
-        "UPDATE etablissement SET libelle =?, code_postale =?, rue =?, ville = ?, gouvernorat_adresse = ?, pays = ? where id_etablissement = ?",
-        [data.libelle, data.code_postale, data.rue, data.ville, data.gouvernorat_adresse, data.pays, data.id_etablissement],
+        "UPDATE etablissement SET libelle =?, code_postale =?, rue =?, ville = ?, gouvernorat_adresse = ?, code_etablissement=?,site_web=?,logo=? where id_etablissement = ?",
+        [data.libelle, data.code_postale, data.rue, data.ville, data.gouvernorat_adresse, data.code_etablissement,data.site_web,data.logo, data.id_etablissement],
             (err, results) => {
                 if (err) {
                     res.status(500).json({

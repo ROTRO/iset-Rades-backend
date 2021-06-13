@@ -29,7 +29,7 @@ module.exports.createClasse = (req, res) => {
 
 module.exports.getListClasse = (req, res) => {
 
-    connexion.query("SELECT * FROM classe,responsable_group,user,adresse WHERE classe.id_responsable=responsable_group.id_responsable_group and responsable_group.id_user=user.id_user and adresse.id_user=user.id_user",
+    connexion.query("SELECT * FROM classe,responsable_classe,user,adresse WHERE classe.id_responsable=responsable_classe.id_responsable_group and responsable_classe.id_user=user.id_user and adresse.id_user=user.id_user",
         (err, results) => {
             if (err) {
                 res.status(500).json({
@@ -38,7 +38,8 @@ module.exports.getListClasse = (req, res) => {
                 });
             }
             
-            if(results.length>0)
+          else{
+                if(results.length>0)
                 res.status(200).json({
                     err:false,
                     results:results,
@@ -48,7 +49,8 @@ module.exports.getListClasse = (req, res) => {
                     err:false,
                     results:[],
                     message:"choix n'existe pas",
-                })  
+                }) } 
+            
         })
 };
 

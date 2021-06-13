@@ -6,8 +6,8 @@ module.exports.create = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     data.password = bcrypt.hashSync(data.password, salt);
     connexion.query(
-        'INSERT INTO user( nom, prenom, email, password,age, cin, sexe, num_passport, date_naissance,id_role,reset_link) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
-        [data.nom, data.prenom, data.email, data.password, data.age, data.cin, data.sexe, data.num_passport, data.date_naissance, data.id_role, null
+        'INSERT INTO user( nom, prenom, email, password,age, cin, sexe, num_passport, date_naissance,id_role) VALUES (?,?,?,?,?,?,?,?,?,?)',
+        [data.nom, data.prenom, data.email, data.password, data.age, data.cin, data.sexe, data.num_passport, data.date_naissance, 4
         ],
         (err, results) => {
             if (err) {
@@ -38,14 +38,14 @@ module.exports.create = (req, res) => {
 
 function createResponsableGroup(data, id_user) {
     connexion.query(
-        "INSERT INTO responsable_group(qualite, id_user) VALUES (?, ?)",
+        "INSERT INTO responsable_classe(qualite, id_user) VALUES (?, ?)",
         [data.qualite, id_user]
     );
 }
 
 module.exports.getListResponsableGroup = (req, res) => {
 
-    connexion.query("SELECT * FROM responsable_group,user WHERE responsable_group.id_user=user.id_user",
+    connexion.query("SELECT * FROM responsable_classe,user WHERE responsable_classe.id_user=user.id_user",
         (err, results) => {
             if (err) {
                 res.status(500).json({
@@ -101,11 +101,11 @@ module.exports.update = (req, res) => {
     const data = req.body;
     const salt = bcrypt.genSaltSync(10);
     data.password = bcrypt.hashSync(data.password, salt);
-    connexion.query('Update user set email = ?, password = ?, id_role = ?, nom = ?, prenom = ?, age = ?, cin = ?, sexe = ?, num_passport = ?, date_naissance = ?, reset_link=? where id_user = ?',
+    connexion.query('Update user set email = ?, password = ?, id_role = ?, nom = ?, prenom = ?, age = ?, cin = ?, sexe = ?, num_passport = ?, date_naissance = ? where id_user = ?',
         [
             data.email,
             data.password,
-            data.id_role,
+            4,
             data.nom,
             data.prenom,
             data.age,
@@ -113,7 +113,7 @@ module.exports.update = (req, res) => {
             data.sexe,
             data.num_passport,
             data.date_naissance,
-            null,
+            
             data.id_user
         ], (err, results) => {
             if (err) {
