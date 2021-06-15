@@ -10,7 +10,7 @@ module.exports.createSpecialite = (req, res) => {
                 res.status(500).json({
                     err:true,
                     message:err.sqlMessage,
-                });
+                });  
             }
 
             if(results.affectedRows>0)

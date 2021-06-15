@@ -28,7 +28,33 @@ module.exports.createMaster = (req, res) => {
         }
     )
 };
+//
+module.exports.getnbApplicantsById = (req, res) => {
+    const id_master = req.params.id;
+    connexion.query("SELECT COUNT(*) FROM `demande_master` WHERE id_master = ?",
+        [id_master],
+        (err, results) => {
 
+            if (err) {
+                res.status(500).json({
+                    err: true,
+                    results: []
+                });
+            }
+
+            if (results.length > 0)
+                res.status(200).json({
+                    err: false,
+                    results: results,
+                })
+            else
+                res.status(404).json({
+                    err: false,
+                    results: [],
+                    message: "choix n'existe pas",
+                })
+        })
+};
 module.exports.getListMaster = (req, res) => {
 
     connexion.query("select * from master, departement, etablissement where master.id_departement = departement.id_departement and master.id_etablissement=etablissement.id_etablissement",

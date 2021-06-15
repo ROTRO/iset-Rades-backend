@@ -1,27 +1,30 @@
 const connexion = require('../../../db_connection');
 
 
-module.exports.createBacclaureat = (req, res) => {
-    const data = req.body;
-    connexion.query(
-        "INSERT INTO `bacclaureat`(`annee`, `section`, `mention`, `session`, `moyenne`) VALUES (?,?,?,?,?)",
-        [data.annee,data.section,data.mention,data.session,data.moyenne],
+module.exports.createCursusG = (req, res) => {
+    const data = req.body; 
+    connexion.query( 
+        "INSERT INTO `cursusgenerale`( `diplome`, `anneeobtentation`, `etablissement`, `domaine`, `specialite`, `Redoublement`) VALUES (?,?,?,?,?,?)",
+        [data.diplome,data.anneeobtentation,data.etablissement,data.domaine,data.specialite,data.Redoublement],
         (err, results) => {
             if (err) {
                 res.status(500).json({
                     err: true,
                     message: err.sqlMessage,
                 });
-            }
-
-            if (results.affectedRows > 0)
+            } 
+            if(results==undefined){
+                console.log(results)
+                console.log(err)
+            } 
+           else if (results.affectedRows > 0)
                 {res.status(200).json({
                     err: false,
                     results: results,
                 })
                 console.log();
                 connexion.query(
-                    "UPDATE etudiant SET id_bacc=? WHERE id_user =?",
+                    "UPDATE etudiant SET id_cursusgenerale=? WHERE id_user =?",
                     [results.insertId, data.id_user])
            
             }
@@ -37,23 +40,21 @@ module.exports.createBacclaureat = (req, res) => {
 };
 
 
-module.exports.getBacById = (req, res) => {
+module.exports.getCursusGById = (req, res) => {
     const id_user = req.params.id;
     connexion.query(
-        "SELECT * FROM bacclaureat where id_bacc = ?",
+        "SELECT * FROM cursusgenerale where id_cursusgenerale = ?",
         [id_user],
         (err, results) => {
 
-            if (err) {   
+            if (err) {
                 res.status(500).json({
                     err: true,
                     results: []
                 });
             }
-             if(results==undefined){
-                 console.log(err,results)
-             }
-           else if (results.length > 0)
+
+            if (results.length > 0)
                 res.status(200).json({
                     err: false,
                     results: results,
@@ -67,11 +68,11 @@ module.exports.getBacById = (req, res) => {
         })
 };
 
-module.exports.updateBacclaureat = (req, res) => {
+module.exports.updateCursusG = (req, res) => {
     const data = req.body;
     connexion.query(
-        "UPDATE `bacclaureat` SET `annee`=?,`section`=?,`mention`=?,`session`=?,`moyenne`=? where `id_bacc` = ?",
-        [data.annee, data.section,data.mention,data.session,data.moyenne,data.id_bacc],
+        "UPDATE `cursusgenerale` SET `diplome`=?,`anneeobtentation`=?,`etablissement`=?,`domaine`=?,`specialite`=?,`Redoublement`=? where `id_cursusgenerale` = ?",
+        [data.diplome, data.anneeobtentation,data.etablissement,data.domaine,data.specialite,data.Redoublement,data.id_cursusgenerale],
         (err, results) => {
             if (err) {
                 res.status(500).json({
@@ -81,7 +82,7 @@ module.exports.updateBacclaureat = (req, res) => {
             }
 
             if (results.affectedRows > 0)
-                res.status(200).json({
+                res.status(200).json({ 
                     err: false,
                     results: results.affectedRows,
                 })

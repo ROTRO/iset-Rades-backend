@@ -37,7 +37,10 @@ module.exports.createDepartement = (req, res) => {
                     message:err.sqlMessage,
                 });
             }
-
+          
+        console.log(results)
+        console.log(err)
+           
             if(results.affectedRows>0)
                 res.status(200).json({
                     err:false,

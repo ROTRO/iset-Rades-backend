@@ -29,6 +29,7 @@ const userRouter = require('./api/routes/evenementiel/user');
 const situationRouter = require('./api/routes/evenementiel/situationEtudiant');
 const etatRouter = require('./api/routes/evenementiel/etatDemandeMaster');
 const bacRouter = require('./api/routes/evenementiel/bacclaureat');
+const CursusGRouter = require('./api/routes/evenementiel/cursusG');
 
 
 /********************************/
@@ -105,6 +106,7 @@ app.use('/users', userRouter);
 app.use('/situation', situationRouter);
 app.use('/etatDemande', etatRouter);
 app.use('/bacclaureat', bacRouter);
+app.use('/cursusG', CursusGRouter);
 
 
 /************************************/

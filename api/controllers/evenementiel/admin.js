@@ -7,7 +7,7 @@ require("dotenv").config();
 module.exports.getAdmin = (req, res) => {
   const id_user = req.params.id;
   connexion.query(
-    'select * from user, adresse where user.id_user = adresse.id_user and user.id_role = 3',
+    'select * from user, adresse where user.id_user = adresse.id_user and user.id_role = 4',
     [id_user],
     (err, results) => {
       console.log(err);
@@ -91,7 +91,7 @@ function updateAdresse(data) {
 module.exports.getAdminByEmail = (req, res) => {
   const body = req.body;
   connexion.query(
-    'select * from user where email = ? and id_role=3',
+    'select * from user where email = ? and id_role=4',
     [body.email],
     (err, results) => {
       if (err) {

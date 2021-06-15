@@ -45,7 +45,7 @@ module.exports.createDemandeMaster = (req, res) => {
 module.exports.getListDemandeMaster = (req, res) => {
 
     connexion.query(
-        "SELECT *, etablissement.libelle as libelleEtablissement, master.nom as nomMaster,etat_demande_master.libelle as edmlibelle FROM demande_master, master,etat_demande_master, etudiant, etablissement,departement,user,adresse WHERE demande_master.id_master = master.id_master and master.id_departement=departement.id_departement and master.id_etablissement=etablissement.id_etablissement and demande_master.id_etudiant = etudiant.id_etudiant and etudiant.id_user = user.id_user and adresse.id_user=user.id_user and etat_demande_master.id_etat_demande_master = demande_master.id_etat_demande_master",
+        "SELECT *, etablissement.libelle as libelleEtablissement, master.nom as nomMaster,etat_demande_master.libelle as edmlibelle FROM demande_master,cursusgenerale,bacclaureat, master,etat_demande_master, etudiant, etablissement,departement,user,adresse WHERE demande_master.id_master = master.id_master and master.id_departement=departement.id_departement and master.id_etablissement=etablissement.id_etablissement and demande_master.id_etudiant = etudiant.id_etudiant and etudiant.id_user = user.id_user and adresse.id_user=user.id_user and etat_demande_master.id_etat_demande_master = demande_master.id_etat_demande_master and bacclaureat.id_bacc = etudiant.id_bacc and cursusgenerale.id_cursusgenerale = etudiant.id_cursusgenerale",
         (err, results) => {
             if (err) {
                 res.status(500).json({

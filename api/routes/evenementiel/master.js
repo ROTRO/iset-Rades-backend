@@ -8,6 +8,7 @@ router.post("/", masterController.createMaster);
 router.get("/", masterController.getListMaster);
  
 router.get("/:id", masterController.getMasterById);
+router.get("/applicants/:id", masterController.getnbApplicantsById);
 
 router.patch("/", masterController.updateMaster);
 

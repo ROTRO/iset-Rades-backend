@@ -51,7 +51,7 @@ module.exports.create = (req, res) => {
             data.sexe,
             data.num_passport,
             data.date_naissance,
-            2,
+            9,
             data.gouvern_naissance,
             data.id_situation_professionnel
         ],
@@ -135,7 +135,7 @@ module.exports.updateUser = (req, res) => {
     console.log(req)
     data.password = bcrypt.hashSync(data.password, salt);
     connexion.query(
-        'Update user set email = ?, password = ?, id_role = 2, nom = ?, prenom = ?, age = ?, cin = ?, sexe = ?, num_passport = ?, date_naissance = ?, gouvern_naissance=? where id_user = ?',
+        'Update user set email = ?, password = ?, id_role = 9, nom = ?, prenom = ?, age = ?, cin = ?, sexe = ?, num_passport = ?, date_naissance = ?, gouvern_naissance=? where id_user = ?',
         [
             data.email,
             data.password,
@@ -232,7 +232,7 @@ module.exports.getUserByUserEmail = (req, res) => {
 module.exports.forgotPassword = (req, res) => {
     const body = req.body;
     connexion.query(
-        'select * from user where email = ? and id_role=2',
+        'select * from user where email = ? and id_role=9',
         [body.email],
         (err, results) => {
             if (err) {
